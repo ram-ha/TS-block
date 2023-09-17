@@ -108,6 +108,9 @@ protected lastName: string
 abstract sayHi(name: string): string
 abstract fullName(): string
 }
+
+-   표준화된 property와 메소드를 갖도록 해주는 설계도를 만들기 위해 추상클래스를 사용함.
+
 class Player extends User {
 fullName(){
 return `${this.firstName} ${lastName}`
@@ -117,7 +120,7 @@ return `Hello ${name}. My name is ${this.fullName()}`
 }
 }
 
-표준화된 property와 메소드를 갖도록 해주는 설계도를 만들기 위해 추상클래스를 사용함.
+---
 
 추상화를 원할 때 클래스와 인터페이스를 사용할 때의 차이점
 
@@ -133,7 +136,7 @@ fullName(): string
 }
 class Player implements User {
 constructor(
-private firstName: string, // 인터페이스를 상속할 때는 private, protected로 만들지 못함
+private firstName: string, // 🚫 인터페이스를 상속할 때는 private, protected로 만들지 못함
 public lastName: string // public만 가능
 ) {}
 fullName(){
@@ -143,3 +146,19 @@ sayHi(name:string){
 return `Hello ${name}. My name is ${this.fullName()}`
 }
 }
+
+-   인터페이스를 만들어두고 각자의 방식으로 클래스를 상속하도록 하는 건 멋진 방법.
+    누가 인터페이스를 사용하더라도 같은 property, method를 가지게 할 수 있음.
+    클래스가 아니지만 클래스의 모양을 특정할 수 있게 해주는 간단한 방법.
+-   한 클래스에서 여러 개의 인터페이스를 상속할 수 있음
+-   argument에 인터페이스를 써서 오브젝트의 모양을 지정해 줄 수 있음.
+    인터페이스를 타입처럼 쓸 수 있기 때문.
+    function makeUser(user: User){
+    return "hi"
+    }
+    makeUser({
+    firstName: "ram",
+    lastName: "ha",
+    fullName: () => "xx",
+    sayHi: (name) => "string"
+    })
