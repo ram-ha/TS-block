@@ -51,3 +51,32 @@ type Player = "1" | "2" // 타입을 특정된 값으로 만드는 것
     다형성을 이룰 수 있는 방법은 제네릭을 사용하는 것
     제네릭은 concrete 타입이 아니라 placeholder타입이다.
     타입스크립트가 placeholder->concrete으로 바꿔줌
+
+interface SStorage<T> {
+[key:string]: T // key가 제한되지 않은 오브젝트를 정의함.
+
+}
+
+class LocalStorage<T> { // 제네릭을 클래스로 보내고 클래스는 제네릭을 인터페이스로 보낸 뒤, 인터페이스는 제네릭을 사용함.
+private storage: SStorage<T> = {}
+set(key:string, value:T){
+this.storage[key] = value;
+}
+remove(key:string){
+delete this.storage[key]
+}
+get(key:string): T { // 제네릭을 바탕으로 call signature 만들어줌. concrete type으로 바꿔줌
+return this.storage[key]
+}
+clear(){
+this.storage = {}
+}
+}
+
+const stringsStorage = new LocalStorage<string>()
+stringsStorage.get("kee")
+stringsStorage.set("hello", "how are u")
+
+const booleansStorage = new LocalStorage<boolean>()
+booleansStorage.get("xxx")
+booleansStorage.set("hello", true) // value 부분은 제네릭이 boolean으로 바뀜.
